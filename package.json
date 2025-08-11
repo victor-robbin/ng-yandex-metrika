@@ -1,18 +1,24 @@
 {
   "name": "ng-yandex-metrika",
-  "version": "18.1.0-a19.0",
+  "version": "19.0.0-a19.0",
   "description": "Angular wrapper for Yandex.Metrika counter",
-  "author": "Original Author <email@example.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/<your-username>/ng-yandex-metrika.git"
+  "repository": "git+https://github.com/victor-robbin/ng-yandex-metrika.git",
+  "scripts": {
+    "build:lib": "ng-packagr -p projects/ng-yandex-metrika/ng-package.json",
+    "prepare": "npm run build:lib"
   },
-  "keywords": [
-    "angular",
-    "yandex",
-    "metrika",
-    "analytics"
+  "main": "dist/ng-yandex-metrika/fesm2022/ng-yandex-metrika.mjs",
+  "module": "dist/ng-yandex-metrika/fesm2022/ng-yandex-metrika.mjs",
+  "typings": "dist/ng-yandex-metrika/ng-yandex-metrika.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/ng-yandex-metrika/ng-yandex-metrika.d.ts",
+      "default": "./dist/ng-yandex-metrika/fesm2022/ng-yandex-metrika.mjs"
+    }
+  },
+  "files": [
+    "dist/ng-yandex-metrika"
   ],
   "peerDependencies": {
     "@angular/common": "^18.0.0 || ^19.0.0",
@@ -20,13 +26,10 @@
     "@angular/platform-browser": "^18.0.0 || ^19.0.0",
     "@angular/router": "^18.0.0 || ^19.0.0"
   },
-  "peerDependenciesMeta": {
-    "@angular/common": { "optional": false },
-    "@angular/core": { "optional": false },
-    "@angular/platform-browser": { "optional": false },
-    "@angular/router": { "optional": false }
-  },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "ng-packagr": "^19.2.0"
   }
 }
