@@ -1,6 +1,6 @@
 {
   "name": "ng-yandex-metrika-workspace",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "description": "Интеграция Яндекс.Метрики с Angular 22",
   "author": "Lyubimov Roman",
   "license": "MIT",
@@ -28,7 +28,8 @@
   "scripts": {
     "build": "ng build ng-yandex-metrika",
     "build:lib": "ng build ng-yandex-metrika",
-    "pack:release": "npm run build:lib && npm pack ./dist/ng-yandex-metrika"
+    "pack:release": "npm run build:lib && npm pack ./dist/ng-yandex-metrika",
+    "test": "npm run build:lib && node --test tests/*.test.mjs && ngc -p tests/tsconfig.json"
   },
   "engines": {
     "node": "^22.22.3 || ^24.15.0 || ^26.0.0"

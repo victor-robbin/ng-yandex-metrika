@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - name: Установить зависимости
         run: npm ci
-      - name: Собрать библиотеку
-        run: npm run build:lib
+      - name: Собрать библиотеку и проверить потребителей
+        run: npm test
       - name: Проверить упаковку
         run: npm pack ./dist/ng-yandex-metrika --dry-run

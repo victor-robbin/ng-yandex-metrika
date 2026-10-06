@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "outDir": "../tmp/consumer", "rootDir": "." },
+  "angularCompilerOptions": { "compilationMode": "full" },
+  "files": ["consumer.ts"]
+}

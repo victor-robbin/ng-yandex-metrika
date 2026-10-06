@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, Injector, ModuleWithProviders, NgModule } from '@angular/core';
+import { inject, Injector, ModuleWithProviders, NgModule, provideAppInitializer } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 
 import { Metrika } from './ng-yandex-metrika.service';
@@ -35,12 +35,11 @@ export class MetrikaModule {
           provide: ALTERNATIVE_URL,
           useValue: alternativeUrl,
         },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: appInitializerFactory,
-          deps: [YANDEX_COUNTERS_CONFIGS, PLATFORM_ID, ALTERNATIVE_URL],
-          multi: true,
-        },
+        provideAppInitializer(() => appInitializerFactory(
+          inject(YANDEX_COUNTERS_CONFIGS),
+          inject(PLATFORM_ID),
+          inject(ALTERNATIVE_URL),
+        )()),
         {
           provide: Metrika,
           useClass: Metrika,

@@ -1,6 +1,6 @@
 {
   "name": "ng-yandex-metrika",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "description": "Интеграция Яндекс.Метрики с Angular 22",
   "keywords": [
     "yandex",
