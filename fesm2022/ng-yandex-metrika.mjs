@@ -1,5 +1,5 @@
 import * as i0 from "@angular/core";
-import { APP_INITIALIZER, Directive, Injectable, InjectionToken, Injector, Input, NgModule, PLATFORM_ID } from "@angular/core";
+import { Directive, Injectable, InjectionToken, Injector, Input, NgModule, PLATFORM_ID, inject, provideAppInitializer } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 const DEFAULT_COUNTER_ID = new InjectionToken("DEFAULT_COUNTER_ID");
 const YANDEX_COUNTERS_CONFIGS = new InjectionToken("YANDEX_COUNTERS_CONFIGS");
@@ -239,16 +239,7 @@ var MetrikaModule = class MetrikaModule {
 					provide: ALTERNATIVE_URL,
 					useValue: alternativeUrl
 				},
-				{
-					provide: APP_INITIALIZER,
-					useFactory: appInitializerFactory,
-					deps: [
-						YANDEX_COUNTERS_CONFIGS,
-						PLATFORM_ID,
-						ALTERNATIVE_URL
-					],
-					multi: true
-				},
+				provideAppInitializer(() => appInitializerFactory(inject(YANDEX_COUNTERS_CONFIGS), inject(PLATFORM_ID), inject(ALTERNATIVE_URL))()),
 				{
 					provide: Metrika,
 					useClass: Metrika,
