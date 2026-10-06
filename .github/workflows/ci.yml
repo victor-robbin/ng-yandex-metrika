@@ -1,0 +1,29 @@
+name: Проверка Angular 22
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получить исходники
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Настроить Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+      - name: Установить зависимости
+        run: npm ci
+      - name: Собрать библиотеку
+        run: npm run build:lib
+      - name: Проверить упаковку
+        run: npm pack ./dist/ng-yandex-metrika --dry-run
