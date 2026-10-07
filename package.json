@@ -1,0 +1,49 @@
+{
+  "name": "ng-yandex-metrika",
+  "version": "20.0.0",
+  "description": "Интеграция Яндекс.Метрики с Angular 20",
+  "keywords": [
+    "yandex",
+    "metrika",
+    "ng",
+    "angular",
+    "Angular20"
+  ],
+  "author": "Lyubimov Roman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victor-robbin/ng-yandex-metrika.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "homepage": "https://github.com/victor-robbin/ng-yandex-metrika#readme",
+  "bugs": {
+    "url": "https://github.com/victor-robbin/ng-yandex-metrika/issues"
+  },
+  "files": [
+    "fesm2022",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "module": "fesm2022/ng-yandex-metrika.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./fesm2022/ng-yandex-metrika.mjs"
+    }
+  },
+  "sideEffects": false
+}

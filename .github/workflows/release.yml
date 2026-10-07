@@ -1,0 +1,68 @@
+name: Релиз пакета
+
+on:
+  push:
+    branches: [codex/package-angular-20]
+    tags:
+      - 'v20.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Получить готовый пакет
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Настроить Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22.23.3'
+      - name: Проверить версию и состав пакета
+        id: package
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync, existsSync, appendFileSync } from 'node:fs';
+          const p = JSON.parse(readFileSync('package.json', 'utf8'));
+          if (p.private || !/^\d+\.\d+\.\d+$/.test(p.version)) {
+            throw new Error('Для релиза требуется готовый пакет со стабильной версией');
+          }
+          const tag = `v${p.version}`;
+          if (process.env.GITHUB_REF.startsWith('refs/tags/') && process.env.GITHUB_REF_NAME !== tag) {
+            throw new Error('Тег должен совпадать с версией пакета');
+          }
+          for (const file of [p.typings, p.module, 'README.md', 'LICENSE', 'RELEASE_NOTES.md']) {
+            if (!file || !existsSync(file)) throw new Error(`Отсутствует файл пакета: ${file}`);
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `tag=${tag}\n`);
+          JS
+      - name: Проверить соответствие пакета неизменяемому тегу
+        env:
+          RELEASE_TAG: ${{ steps.package.outputs.tag }}
+        run: |
+          git fetch --depth=1 origin "refs/tags/$RELEASE_TAG:refs/tags/$RELEASE_TAG"
+          git diff --exit-code "$RELEASE_TAG" -- package.json fesm2022 index.d.ts README.md LICENSE
+      - name: Упаковать пакет и вычислить контрольную сумму
+        run: |
+          npm pack --ignore-scripts
+          sha256sum *.tgz > SHA256SUMS
+      - name: Опубликовать GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.package.outputs.tag }}
+        run: |
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --notes-file RELEASE_NOTES.md
+          else
+            gh release create "$RELEASE_TAG" *.tgz SHA256SUMS \
+              --repo "$GITHUB_REPOSITORY" --verify-tag \
+              --latest=false --title "$RELEASE_TAG — Angular 20" --notes-file RELEASE_NOTES.md
+          fi
