@@ -1,0 +1,38 @@
+name: Neutral public release descriptions
+on:
+  push:
+    branches: [codex/public-descriptions]
+permissions:
+  contents: write
+jobs:
+  descriptions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22.23.3'
+      - name: Apply neutral release descriptions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for notes in .github/release-descriptions/*.md; do
+            tag=$(basename "$notes" .md)
+            gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --notes-file "$notes"
+          done
+      - name: Replace archives with packages from cleaned tags
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for notes in .github/release-descriptions/*.md; do
+            tag=$(basename "$notes" .md)
+            package_dir=$(mktemp -d)
+            artifact_dir=$(mktemp -d)
+            git archive "$tag" | tar -x -C "$package_dir"
+            npm pack "$package_dir" --ignore-scripts --pack-destination "$artifact_dir"
+            (cd "$artifact_dir" && sha256sum *.tgz > SHA256SUMS)
+            gh release upload "$tag" "$artifact_dir"/*.tgz "$artifact_dir"/SHA256SUMS --repo "$GITHUB_REPOSITORY" --clobber
+          done
