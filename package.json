@@ -1,7 +1,7 @@
 {
   "name": "ng-yandex-metrika-workspace",
-  "version": "22.0.1",
-  "description": "Интеграция Яндекс.Метрики с Angular 22",
+  "version": "20.0.0",
+  "description": "Совместимая сборка ng-yandex-metrika для Angular 20",
   "author": "Lyubimov Roman",
   "license": "MIT",
   "repository": {
@@ -13,14 +13,14 @@
     "yandex",
     "metrika",
     "analytics",
-    "Angular22"
+    "Angular20"
   ],
   "dependencies": {
-    "@angular/common": "22.2.1",
-    "@angular/core": "22.2.1",
-    "@angular/compiler": "22.2.1",
-    "@angular/platform-browser": "22.2.1",
-    "@angular/router": "22.2.1",
+    "@angular/common": "20.3.33",
+    "@angular/core": "20.3.33",
+    "@angular/compiler": "20.3.33",
+    "@angular/platform-browser": "20.3.33",
+    "@angular/router": "20.3.33",
     "rxjs": "^7.8.2",
     "tslib": "^2.8.1"
   },
@@ -32,14 +32,14 @@
     "test": "npm run build:lib && node --test tests/*.test.mjs && ngc -p tests/tsconfig.json"
   },
   "engines": {
-    "node": "^22.22.3 || ^24.15.0 || ^26.0.0"
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "devDependencies": {
-    "@angular/build": "22.2.1",
-    "@angular/cli": "22.2.1",
-    "@angular/compiler-cli": "22.2.1",
-    "ng-packagr": "22.2.1",
-    "typescript": "6.0.3"
+    "@angular/build": "20.3.39",
+    "@angular/cli": "20.3.39",
+    "@angular/compiler-cli": "20.3.33",
+    "ng-packagr": "20.3.2",
+    "typescript": "5.8.3"
   },
   "homepage": "https://github.com/victor-robbin/ng-yandex-metrika#readme",
   "bugs": {

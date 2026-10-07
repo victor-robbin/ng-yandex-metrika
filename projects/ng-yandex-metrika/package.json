@@ -1,13 +1,13 @@
 {
   "name": "ng-yandex-metrika",
-  "version": "22.0.1",
-  "description": "Интеграция Яндекс.Метрики с Angular 22",
+  "version": "20.0.0",
+  "description": "Интеграция Яндекс.Метрики с Angular 20",
   "keywords": [
     "yandex",
     "metrika",
     "ng",
     "angular",
-    "Angular22"
+    "Angular20"
   ],
   "author": "Lyubimov Roman",
   "license": "MIT",
@@ -16,10 +16,10 @@
     "url": "git+https://github.com/victor-robbin/ng-yandex-metrika.git"
   },
   "peerDependencies": {
-    "@angular/common": "^22.0.0",
-    "@angular/core": "^22.0.0",
-    "@angular/platform-browser": "^22.0.0",
-    "@angular/router": "^22.0.0"
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/router": "^20.0.0"
   },
   "dependencies": {
     "tslib": "^2.8.1"
@@ -30,7 +30,7 @@
   },
   "files": [
     "fesm2022",
-    "types",
+    "index.d.ts",
     "README.md",
     "LICENSE"
   ]
